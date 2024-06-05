@@ -30,8 +30,19 @@ builder.Services.AddScoped<IRoomService, RoomManager>();
 builder.Services.AddScoped<ISubscribeDal, EfSubscribeDal>();
 builder.Services.AddScoped<ISubscribeService, SubscribeManager>();
 
+//Api iþlemlerinde apinin baþka kaynaklar tarafýndan tüketilmesini saðlar
+builder.Services.AddCors(options =>
+{
+    //Consume edilecek kaynaðýn ismini ve alanlarý tutacak
+    options.AddPolicy("OtelApiCors", opt =>
+    {
+        opt.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+    });
+});
+
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -40,6 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("OtelApiCors");
 app.UseAuthorization();
 
 app.MapControllers();
