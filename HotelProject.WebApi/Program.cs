@@ -3,6 +3,7 @@ using HotelProject.BusinnesLayer.Concrete;
 using HotelProject.DataAccessLayer.Abstract;
 using HotelProject.DataAccessLayer.Concrete;
 using HotelProject.DataAccessLayer.EntityFramework;
+using HotelProject.WebApi.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IRoomService, RoomManager>();
 builder.Services.AddScoped<ISubscribeDal, EfSubscribeDal>();
 builder.Services.AddScoped<ISubscribeService, SubscribeManager>();
 
+builder.Services.AddAutoMapper(typeof(Program));
 //Api iþlemlerinde apinin baþka kaynaklar tarafýndan tüketilmesini saðlar
 builder.Services.AddCors(options =>
 {
